@@ -30,7 +30,7 @@ source_environment_tempfile="$top/stage/source_environment.sh"
 TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' NEWS | head -1)"
 
 build=${AUTOBUILD_BUILD_ID:=0}
-echo "${TRACY_VERSION}.${build}" > "$pwd/stage/VERSION.txt"
+echo "${TRACY_VERSION}.${build}" > "$top/stage/VERSION.txt"
 
 mkdir -p "$stage/include/tracy"
 cp -r $top/* "$stage/include/tracy"
