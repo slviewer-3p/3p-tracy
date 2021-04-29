@@ -33,8 +33,8 @@ build=${AUTOBUILD_BUILD_ID:=0}
 echo "${TRACY_VERSION}.${build}" > "${stage}/VERSION.txt"
 
 mkdir -p "$stage/include/tracy"
-mkdir -p "$stage/LICENSES"
+cp -r $top/* "$stage/include/tracy"
 
-cp -r "$top/*" "$stage/include/tracy"
+mkdir -p "$stage/LICENSES"
 cp "$top/LICENSE" "$stage/LICENSES"
 
