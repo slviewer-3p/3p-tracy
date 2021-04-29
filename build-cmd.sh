@@ -23,7 +23,7 @@ top="$(pwd)"
 stage="/tmp/3p-tracy-stage"
 
 # Load autobuild provided shell functions and variables
-source_environment_tempfile="$stage/source_environment.sh"
+source_environment_tempfile="$top/stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
