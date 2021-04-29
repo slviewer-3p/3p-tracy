@@ -40,6 +40,6 @@ rm $stage/include/tracy/autobuild.xml
 rm $stage/include/tracy/build-cmd.sh
 rm $stage/include/tracy/BuildParams
 
-cp -rf $stage $top/
+cp -rf $stage $top/stage/
 rm -rf $stage
 
