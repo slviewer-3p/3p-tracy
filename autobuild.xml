@@ -10,7 +10,7 @@
       <key>license</key>
       <string>bsd</string>
       <key>license_file</key>
-      <string>LICENSE</string>
+      <string>LICENSES/LICENSE</string>
       <key>name</key>
       <string>tracy</string>
       <key>platforms</key>
@@ -40,6 +40,7 @@
           <array>
             <string>include/Tracy.hpp</string>
             <string>include/TracyClient.cpp</string>
+            <string>LICENSES/LICENSE</string>
           </array>
           <key>name</key>
           <string>common</string>
