@@ -20,7 +20,7 @@ else
 fi
 
 top="$(pwd)"
-stage="$(pwd)/stage"
+stage="$(pwd)/../stage"
 
 # Load autobuild provided shell functions and variables
 source_environment_tempfile="$stage/source_environment.sh"

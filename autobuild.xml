@@ -47,7 +47,7 @@
         <key>linux</key>
         <map>
           <key>build_directory</key>
-          <string>stage</string>
+          <string>../stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
