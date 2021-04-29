@@ -27,10 +27,10 @@ source_environment_tempfile="$stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
-TRACY_VERSION="$(awk '/v[0-9].+.[0-9].+.[0-9].+/' NEWS | head -1)"
+TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' NEWS | head -1)"
 
 build=${AUTOBUILD_BUILD_ID:=0}
-echo "${TRACY_VERSION} Build ${build}" > "${stage}/VERSION.txt"
+echo "${TRACY_VERSION}.${build}" > "${stage}/VERSION.txt"
 
 mkdir -p "$stage/include"
 mkdir -p "$stage/LICENSES"
@@ -38,3 +38,4 @@ mkdir -p "$stage/LICENSES"
 cp "$top/Tracy.hpp" "$stage/include"
 cp "$top/TracyClient.cpp" "$stage/include"
 cp "$top/LICENSE" "$stage/LICENSES"
+
