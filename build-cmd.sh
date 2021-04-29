@@ -32,10 +32,9 @@ TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' NEWS | head
 build=${AUTOBUILD_BUILD_ID:=0}
 echo "${TRACY_VERSION}.${build}" > "${stage}/VERSION.txt"
 
-mkdir -p "$stage/include"
+mkdir -p "$stage/include/tracy"
 mkdir -p "$stage/LICENSES"
 
-cp "$top/Tracy.hpp" "$stage/include"
-cp "$top/TracyClient.cpp" "$stage/include"
+cp -r "$top/*" "$stage/include/tracy"
 cp "$top/LICENSE" "$stage/LICENSES"
 
