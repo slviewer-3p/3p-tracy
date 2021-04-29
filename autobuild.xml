@@ -38,7 +38,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/tracy</string>
+            <string>include/tracy/*</string>
           </array>
           <key>name</key>
           <string>common</string>
