@@ -20,7 +20,7 @@ else
 fi
 
 top="$(pwd)"
-stage="$(pwd)/../stage"
+stage="/tmp/3p-tracy-stage"
 
 # Load autobuild provided shell functions and variables
 source_environment_tempfile="$stage/source_environment.sh"
@@ -34,7 +34,10 @@ echo "${TRACY_VERSION}.${build}" > "${stage}/VERSION.txt"
 
 mkdir -p "$stage/include/tracy"
 cp -r $top/* "$stage/include/tracy"
+rm -rf $stage/.git
+rm $stage/autobuild.xml
+rm $stage/build-cmd.sh
+rm $stage/BuildParams
 
-mkdir -p "$stage/LICENSES"
-cp "$top/LICENSE" "$stage/LICENSES"
+mv $stage $pwd/
 

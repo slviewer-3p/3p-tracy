@@ -10,7 +10,7 @@
       <key>license</key>
       <string>bsd</string>
       <key>license_file</key>
-      <string>LICENSES/LICENSE</string>
+      <string>include/tracy/LICENSE</string>
       <key>name</key>
       <string>tracy</string>
       <key>platforms</key>
@@ -39,7 +39,6 @@
           <key>manifest</key>
           <array>
             <string>include/tracy</string>
-            <string>LICENSES/LICENSE</string>
           </array>
           <key>name</key>
           <string>common</string>
@@ -47,7 +46,7 @@
         <key>linux</key>
         <map>
           <key>build_directory</key>
-          <string>../stage</string>
+          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
