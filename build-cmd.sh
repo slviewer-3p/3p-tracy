@@ -34,11 +34,13 @@ echo "${TRACY_VERSION}.${build}" > "$top/stage/VERSION.txt"
 
 mkdir -p "$stage/include/tracy"
 cp -r $top/* "$stage/include/tracy"
-rm -rf $stage/.git
-rm $stage/autobuild.xml
-rm $stage/build-cmd.sh
-rm $stage/BuildParams
 
-cp -rf $stage $pwd/
+cp -rf $stage $top/
 rm -rf $stage
+
+rm -rf $top/stage/.git
+rm $top/stage/autobuild.xml
+rm $top/stage/build-cmd.sh
+rm $top/stage/BuildParams
+
 
