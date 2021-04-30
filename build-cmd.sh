@@ -32,14 +32,16 @@ TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' NEWS | head
 build=${AUTOBUILD_BUILD_ID:=0}
 echo "${TRACY_VERSION}.${build}" > "$top/stage/VERSION.txt"
 
-mkdir -p "$stage/include/tracy"
-cp -r $top/* "$stage/include/tracy"
+mkdir -p $stage
+cp -r $top/* $stage
 
-rm -rf $stage/include/tracy/*.git
-rm $stage/include/tracy/autobuild.xml
-rm $stage/include/tracy/build-cmd.sh
-rm $stage/include/tracy/BuildParams
+rm -rf $stage/*.git
+rm $stage/autobuild.xml
+rm $stage/build-cmd.sh
+rm $stage/BuildParams
 
-cp -rf $stage $top/stage/
+mkdir -p $top/stage/include
+
+mv $stage $top/stage/include/tracy
+
 rm -rf $stage
-
