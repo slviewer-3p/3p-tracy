@@ -27,10 +27,14 @@ source_environment_tempfile="$top/stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
-TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' NEWS | head -1)"
+TRACY_VERSION="$(sed -n -E 's/(v[0-9]+\.[0-9]+\.[0-9]+) \(.+\)/\1/p' tracy/NEWS | head -1)"
 
 build=${AUTOBUILD_BUILD_ID:=0}
 echo "${TRACY_VERSION}.${build}" > "$top/stage/VERSION.txt"
+
+# copy license file
+mkdir -p "$top/stage/LICENSES"
+cp tracy/LICENSE "$top/stage/LICENSES/tracy.txt"
 
 mkdir -p $stage
 cp -r $top/* $stage

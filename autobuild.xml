@@ -7,16 +7,20 @@
       <string>https://bitbucket.org/lindenlab/3p-tracy</string>
       <key>copyright</key>
       <string>Copyright (c) 2017-2021, Bartosz Taudul (wolf@nereid.pl)</string>
+      <key>description</key>
+      <string>Tracy Profiler Library</string>
       <key>license</key>
       <string>bsd</string>
       <key>license_file</key>
-      <string>include/tracy/LICENSE</string>
-      <key>name</key>
+      <string>LICENSES/tracy.txt</string>
+	  <key>name</key>
       <string>tracy</string>
       <key>platforms</key>
       <map>
         <key>common</key>
         <map>
+          <key>build_directory</key>
+          <string>stage</string>
           <key>configurations</key>
           <map>
             <key>default</key>
