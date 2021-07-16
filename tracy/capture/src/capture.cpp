@@ -14,10 +14,10 @@
 #include <sys/stat.h>
 
 #include "../../common/TracyProtocol.hpp"
+#include "../../common/TracyStackFrames.hpp"
 #include "../../server/TracyFileWrite.hpp"
 #include "../../server/TracyMemory.hpp"
 #include "../../server/TracyPrint.hpp"
-#include "../../server/TracyStackFrames.hpp"
 #include "../../server/TracyWorker.hpp"
 
 #ifdef _WIN32
@@ -248,7 +248,7 @@ int main( int argc, char** argv )
     auto f = std::unique_ptr<tracy::FileWrite>( tracy::FileWrite::Open( output ) );
     if( f )
     {
-        worker.Write( *f );
+        worker.Write( *f, false );
         printf( " \033[32;1mdone!\033[0m\n" );
         f->Finish();
         const auto stats = f->GetCompressionStatistics();

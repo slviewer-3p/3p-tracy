@@ -12,6 +12,7 @@
 #include "TracyBadVersion.hpp"
 #include "TracyBuzzAnim.hpp"
 #include "TracyDecayValue.hpp"
+#include "TracyFileWrite.hpp"
 #include "TracyImGui.hpp"
 #include "TracyShortPtr.hpp"
 #include "TracySourceContents.hpp"
@@ -55,13 +56,20 @@ class View
         uint64_t count;
     };
 
+    enum class AccumulationMode
+    {
+        SelfOnly,
+        AllChildren,
+        NonReentrantChildren
+    };
+
     struct StatisticsCache
     {
         RangeSlim range;
+        AccumulationMode accumulationMode;
         size_t sourceCount;
         size_t count;
         int64_t total;
-        int64_t selfTotal;
     };
 
 public:
@@ -137,6 +145,14 @@ private:
         LastRange
     };
 
+    struct ZoneColorData
+    {
+        uint32_t color;
+        uint32_t accentColor;
+        float thickness;
+        bool highlight;
+    };
+
     void InitMemory();
     void InitTextEditor( ImFont* font );
 
@@ -178,6 +194,7 @@ private:
     void DrawMessages();
     void DrawMessageLine( const MessageData& msg, bool hasCallstack, int& idx );
     void DrawFindZone();
+    void AccumulationModeComboBox();
     void DrawStatistics();
     void DrawMemory();
     void DrawAllocList();
@@ -221,12 +238,8 @@ private:
     uint32_t GetRawSrcLocColor( const SourceLocation& srcloc, int depth );
     uint32_t GetZoneColor( const ZoneEvent& ev, uint64_t thread, int depth );
     uint32_t GetZoneColor( const GpuEvent& ev );
-    uint32_t GetRawZoneColor( const ZoneEvent& ev, uint64_t thread, int depth );
-    uint32_t GetRawZoneColor( const GpuEvent& ev );
-    uint32_t GetZoneHighlight( const ZoneEvent& ev, uint64_t thread, int depth );
-    uint32_t GetZoneHighlight( const GpuEvent& ev );
-    float GetZoneThickness( const ZoneEvent& ev );
-    float GetZoneThickness( const GpuEvent& ev );
+    ZoneColorData GetZoneColorData( const ZoneEvent& ev, uint64_t thread, int depth );
+    ZoneColorData GetZoneColorData( const GpuEvent& ev );
 
     void ZoomToZone( const ZoneEvent& ev );
     void ZoomToZone( const GpuEvent& ev );
@@ -245,11 +258,14 @@ private:
 
     const ZoneEvent* GetZoneParent( const ZoneEvent& zone ) const;
     const ZoneEvent* GetZoneParent( const ZoneEvent& zone, uint64_t tid ) const;
+    bool IsZoneReentry( const ZoneEvent& zone ) const;
+    bool IsZoneReentry( const ZoneEvent& zone, uint64_t tid ) const;
     const GpuEvent* GetZoneParent( const GpuEvent& zone ) const;
     const ThreadData* GetZoneThreadData( const ZoneEvent& zone ) const;
     uint64_t GetZoneThread( const ZoneEvent& zone ) const;
     uint64_t GetZoneThread( const GpuEvent& zone ) const;
     const GpuCtxData* GetZoneCtx( const GpuEvent& zone ) const;
+    bool FindMatchingZone( int prev0, int prev1, int flags );
     const ZoneEvent* FindZoneAtTime( uint64_t thread, int64_t time ) const;
     uint64_t GetFrameNumber( const FrameData& fd, int i, uint64_t offset ) const;
     const char* GetFrameText( const FrameData& fd, int i, uint64_t ftime, uint64_t offset ) const;
@@ -282,6 +298,7 @@ private:
     void CalcZoneTimeDataImpl( const V& children, const ContextSwitch* ctx, unordered_flat_map<int16_t, ZoneTimeData>& data, int64_t& ztime, const ZoneEvent& zone );
 
     void SetPlaybackFrame( uint32_t idx );
+    bool Save( const char* fn, FileWrite::Compression comp, int zlevel, bool buildDict );
 
     unordered_flat_map<const void*, VisData> m_visData;
     unordered_flat_map<uint64_t, bool> m_visibleMsgThread;
@@ -323,7 +340,7 @@ private:
     void AdjustThreadHeight( View::VisData& vis, int oldOffset, int& offset );
 
     Worker m_worker;
-    std::string m_filename;
+    std::string m_filename, m_filenameStaging;
     bool m_staticView;
     ViewMode m_viewMode;
     bool m_viewModeHeuristicTry = false;
@@ -385,7 +402,7 @@ private:
     bool m_showCpuDataWindow = false;
     bool m_showAnnotationList = false;
 
-    bool m_statSelf = true;
+    AccumulationMode m_statAccumulationMode = AccumulationMode::SelfOnly;
     bool m_statSampleTime = true;
     int m_statMode = 0;
     int m_statSampleLocation = 2;
@@ -395,6 +412,7 @@ private:
     bool m_showUnknownFrames = true;
     bool m_statSeparateInlines = false;
     bool m_statShowAddress = false;
+    bool m_statShowKernel = true;
     bool m_groupChildrenLocations = false;
     bool m_allocTimeRelativeToZone = true;
     bool m_ctxSwitchTimeRelativeToZone = true;
@@ -443,6 +461,13 @@ private:
         Inert,
         Saving,
         NeedsJoin
+    };
+
+    enum
+    {
+        FindMatchingZoneFlagDefault = 0,
+        FindMatchingZoneFlagSourceFile = (1 << 0),
+        FindMatchingZoneFlagLineNum = (1 << 1),
     };
 
     std::atomic<SaveThreadState> m_saveThreadState { SaveThreadState::Inert };
@@ -706,6 +731,8 @@ private:
         uint64_t symAddr = 0;
         int sel;
     } m_sampleParents;
+
+    std::vector<std::pair<int, int>> m_cpuUsageBuf;
 };
 
 }
