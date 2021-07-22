@@ -13,7 +13,7 @@
       <string>bsd</string>
       <key>license_file</key>
       <string>LICENSES/tracy.txt</string>
-	  <key>name</key>
+      <key>name</key>
       <string>tracy</string>
       <key>platforms</key>
       <map>
@@ -23,18 +23,36 @@
           <string>stage</string>
           <key>configurations</key>
           <map>
+            <key>RelWithDebInfo</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>-c</string>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+               <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>RelWithDebInfo</string>
+            </map>
             <key>default</key>
             <map>
               <key>build</key>
               <map>
                 <key>arguments</key>
                 <array>
+                  <string>-c</string>
                   <string>../build-cmd.sh</string>
                 </array>
                 <key>command</key>
                 <string>bash</string>
               </map>
-              <key>default</key>
+               <key>default</key>
               <boolean>true</boolean>
               <key>name</key>
               <string>default</string>
@@ -42,7 +60,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/tracy/*</string>
+            <string>include/tracy/*.hpp</string>
           </array>
           <key>name</key>
           <string>common</string>
@@ -63,6 +81,54 @@
           </map>
           <key>name</key>
           <string>linux</string>
+        </map>
+        <key>windows</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>RelWithDebInfo</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>-c</string>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+               <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>RelWithDebInfo</string>
+            </map>
+            <key>default</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>-c</string>
+                  <string>../build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/tracy.lib</string>
+          </array>
+          <key>name</key>
+          <string>windows</string>
         </map>
       </map>
       <key>source</key>
