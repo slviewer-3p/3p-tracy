@@ -61,6 +61,8 @@
           <key>manifest</key>
           <array>
             <string>include/tracy/*.hpp</string>
+            <string>include/tracy/common/*.hpp</string>
+            <string>include/tracy/client/*.hpp</string>
           </array>
           <key>name</key>
           <string>common</string>
