@@ -62,7 +62,9 @@
           <array>
             <string>include/tracy/*.hpp</string>
             <string>include/tracy/common/*.hpp</string>
+            <string>include/tracy/common/*.h</string>
             <string>include/tracy/client/*.hpp</string>
+            <string>include/tracy/client/*.h</string>
           </array>
           <key>name</key>
           <string>common</string>

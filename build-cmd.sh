@@ -54,9 +54,11 @@ pushd "$source_dir"
 
             mkdir -p "$stage_dir/include/tracy/common"
             cp common/*.hpp "$stage_dir/include/tracy/common"
+            cp common/*.h "$stage_dir/include/tracy/common"
 
             mkdir -p "$stage_dir/include/tracy/client"
             cp client/*.hpp "$stage_dir/include/tracy/client"
+            cp client/*.h "$stage_dir/include/tracy/client"
         ;;
 
         darwin*)
