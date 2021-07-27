@@ -12,7 +12,7 @@
       <key>license</key>
       <string>bsd</string>
       <key>license_file</key>
-      <string>LICENSES/tracy.txt</string>
+      <string>LICENSES/tracy_license.txt</string>
       <key>name</key>
       <string>tracy</string>
       <key>platforms</key>
