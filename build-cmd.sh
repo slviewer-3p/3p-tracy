@@ -75,6 +75,25 @@ pushd "$source_dir"
 
             rm -r "$stage_dir/lib/cmake"
         ;;
+        linux64)
+	    cmake .  -DCMAKE_INSTALL_PREFIX:STRING="${stage_dir}"
+            make
+
+            mkdir -p "$stage_dir/lib/release"
+            mv "libtracy.a" "$stage_dir/lib/release/libtracy.a"
+
+            mkdir -p "$stage_dir/include/tracy"
+            cp *.hpp "$stage_dir/include/tracy/"
+
+            mkdir -p "$stage_dir/include/tracy/common"
+            cp common/*.hpp "$stage_dir/include/tracy/common"
+            cp common/*.h "$stage_dir/include/tracy/common"
+
+            mkdir -p "$stage_dir/include/tracy/client"
+            cp client/*.hpp "$stage_dir/include/tracy/client"
+            cp client/*.h "$stage_dir/include/tracy/client"
+
+        ;;
     esac
 popd
 
